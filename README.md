@@ -25,14 +25,8 @@ This project utilizes particles to render volume-based cursed techniques:
 ### Prerequisites
 You need a modern web browser (Chrome, Edge, Firefox) and a webcam.
 
-### Installation
-1.  **Clone the repo**
-    ```bash
-    git clone [https://github.com/reinesana/SAT0RU.git](https://github.com/reinesana/SAT0RU.git)
-    cd SAT0RU
-    ```
 
-2.  **Run the project**
+**Run the project**
     **VS Code:** Install the "Live Server" extension, right-click `index.html`, and select "Open with Live Server".
 
 ## Note 
