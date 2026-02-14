@@ -5,14 +5,45 @@ SAT0RU GOJO is a cursed technique visualizer based on the popular anime series, 
 
 # AI Gesture Interface
 
-This project is based on SAT0RU by reinesana.
-I have modified and extended it to include:
+A real-time gesture-based visual interface built using MediaPipe and Three.js.
 
-- Improved UI
-- Gesture control actions
-- Performance improvements
-- Future AI-based gesture classifier
+This project is inspired by the original SAT0RU project by reinesana and has been modified and extended with additional improvements and future development plans.
 
-## Author
+---
+
+## 🚀 Improvements Made
+
+- Improved UI structure and layout
+- Enhanced gesture control logic
+- Performance optimizations
+- Cleaner project structure
+- Removal of unnecessary system files
+
+---
+
+## 🧠 Upcoming Features
+
+- Custom AI-based gesture classifier (TensorFlow / PyTorch)
+- Gesture confidence score display
+- Voice + gesture hybrid control
+- Smart assistant integration
+- Deployment-ready production version
+
+---
+
+## 🛠 Tech Stack
+
+- JavaScript
+- MediaPipe
+- Three.js
+- HTML / CSS
+
+---
+
+## 📌 Credits
+
+Original concept and base project:
+https://github.com/reinesana/SAT0RU
+
+Modified and extended by:
 Shubham Sharma
-.
