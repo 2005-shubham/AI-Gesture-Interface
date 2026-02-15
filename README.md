@@ -1,49 +1,29 @@
-## Description
-SAT0RU GOJO is a cursed technique visualizer based on the popular anime series, Jujutsu Kaisen 呪術廻戦. It combines the mediapipe library with three.js to recreate cursed techniques from Jujutsu Kaisen. Powered by Gemini 3.
+# Jujutsu Kaisen: Cursed Technique Visualizer
+
+A web-based interactive experience that uses **MediaPipe Hand Tracking** and **Three.js** to visualize Cursed Techniques from Jujutsu Kaisen in real-time.
 
 ![Demo GIF](https://github.com/user-attachments/assets/8ad2b871-02c0-4b97-95f3-34682e745be0)
 
-# AI Gesture Interface
+> **Status:** Active Development
+> **Tech Stack:** HTML5, CSS3, JavaScript (ES6+), Three.js, MediaPipe
 
-A real-time gesture-based visual interface built using MediaPipe and Three.js.
+## 🎮 Features & Controls
 
-This project is inspired by the original SAT0RU project by reinesana and has been modified and extended with additional improvements and future development plans.
+Use hand gestures in front of your camera to trigger different Cursed Techniques.
 
----
+| Technique | Character | Gesture / Trigger | Visual Effect |
+| :--- | :--- | :--- | :--- |
+| **Dismantle (Slash)** | Ryomen Sukuna | 🤘 **Rock Sign** (Index + Pinky UP) | Invisible flying slashes (Red/Black) |
+| **Malevolent Shrine** | Ryomen Sukuna | 🖐 **All Fingers Open** | Red chaotic particle storm |
+| **Hollow Purple** | Satoru Gojo | 👌 **Pinch** (Index + Thumb) | Purple matter destruction orb |
+| **Infinite Void** | Satoru Gojo | 🤞 **Index & Middle UP** | Blue information overload void |
+| **Cursed Technique Red** | Satoru Gojo | ☝ **Index Finger UP** | Repulsive red energy orb |
 
-## 🚀 Improvements Made
+## 🚀 Setup & Run Locally
 
-- Improved UI structure and layout
-- Enhanced gesture control logic
-- Performance optimizations
-- Cleaner project structure
-- Removal of unnecessary system files
+Since this project uses ES6 Modules, you cannot simply open `index.html`. You must serve it locally.
 
----
-
-## 🧠 Upcoming Features
-
-- Custom AI-based gesture classifier (TensorFlow / PyTorch)
-- Gesture confidence score display
-- Voice + gesture hybrid control
-- Smart assistant integration
-- Deployment-ready production version
-
----
-
-## 🛠 Tech Stack
-
-- JavaScript
-- MediaPipe
-- Three.js
-- HTML / CSS
-
----
-
-## 📌 Credits
-
-Original concept and base project:
-https://github.com/reinesana/SAT0RU
-
-Modified and extended by:
-Shubham Sharma
+1. **Clone the repository**
+   ```bash
+   git clone [https://github.com/2005-shubham/AI-Gesture-Interface.git](https://github.com/2005-shubham/AI-Gesture-Interface.git)
+   cd AI-Gesture-Interface
