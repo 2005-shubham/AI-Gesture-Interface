@@ -5,7 +5,7 @@ A web-based interactive experience that uses **MediaPipe Hand Tracking** and **T
 ![Demo GIF](https://github.com/user-attachments/assets/8ad2b871-02c0-4b97-95f3-34682e745be0)
 
 > **Status:** Active Development
-> **Tech Stack:** HTML5, CSS3, JavaScript (ES6+), Three.js, MediaPipe
+> **Tech Stack:** HTML5
 
 ## 🎮 Features & Controls
 

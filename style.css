@@ -1,0 +1,200 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background: linear-gradient(300deg, #000000, #1a0b14, #0d0d1a);
+    background-size: 180% 180%;
+    animation: gradient-animation 18s ease infinite;
+    font-family: 'Courier New', sans-serif;
+}
+
+@keyframes gradient-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+#ui {
+    position: absolute;
+    top: 10%;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    pointer-events: none;
+    z-index: 10;
+}
+
+#technique-name {
+    font-size: 2.5rem;
+    color: #fff;
+    margin-top: 5vh;
+    font-weight: 900;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5);
+    animation: text-flicker 3s infinite alternate;
+}
+
+@keyframes text-flicker {
+    0% { opacity: 1; text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5); }
+    5% { opacity: 0.8; text-shadow: 2px 0 rgba(255, 0, 0, 0.5), -2px 0 rgba(0, 255, 255, 0.5); }
+    10% { opacity: 1; text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5); }
+    100% { opacity: 1; text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 40px rgba(255, 255, 255, 0.8); }
+}
+
+#video-container {
+    position: absolute;
+    bottom: 2%;
+    left: 18%;
+    transform: translateX(-50%) scaleX(-1);
+    width: 85vw;
+    max-width: 450px;
+    height: 42vh;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    z-index: 20;
+    background-color: #000;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
+}
+
+video { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+#output_canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+#grain {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 5;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+}
+
+#credits {
+    position: absolute; top: 20px; left: 20px; z-index: 100;
+    text-align: left; pointer-events: auto;
+}
+
+.credit-name {
+    color: #fff; font-size: 1.1rem; font-weight: 900;
+    text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
+    margin-bottom: 5px; letter-spacing: 2px;
+}
+
+.credit-links { display: flex; flex-direction: column; gap: 2px; }
+
+#overlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background-color: #000; z-index: 1000;
+    display: flex; justify-content: center; align-items: center;
+    color: #fff; flex-direction: column; cursor: pointer;
+    transition: opacity 1s ease;
+}
+
+#overlay h1 {
+    font-size: 2rem; text-shadow: 0 0 20px red;
+    animation: pulse 1.5s infinite; background: none;
+    -webkit-text-fill-color: white;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.5; transform: scale(0.95); }
+    50% { opacity: 1; transform: scale(1.05); }
+    100% { opacity: 0.5; transform: scale(0.95); }
+}
+
+.credit-links a {
+    color: rgba(255, 255, 255, 0.7); font-size: 0.85rem;
+    text-decoration: none; transition: all 0.3s ease; letter-spacing: 1px;
+}
+.credit-links a:hover { color: #00ffff; text-shadow: 0 0 8px #00ffff; }
+
+/* Dismantle Slash Effect */
+#slash-container {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none; z-index: 15; overflow: hidden;
+}
+
+.slash-line {
+    position: absolute; height: 3px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 30, 30, 0.5) 5%, rgba(255, 100, 100, 0.8) 20%, rgba(255, 200, 200, 0.95) 40%, #fff 50%, rgba(255, 200, 200, 0.95) 60%, rgba(255, 100, 100, 0.8) 80%, rgba(255, 30, 30, 0.5) 95%, transparent 100%);
+    box-shadow: 0 0 12px rgba(255, 0, 0, 1), 0 0 35px rgba(255, 0, 0, 0.7), 0 0 60px rgba(255, 0, 0, 0.3), 0 0 4px #fff;
+    animation: slash-cut 0.5s ease-out forwards;
+}
+
+.slash-line.thick {
+    height: 5px;
+    box-shadow: 0 0 18px rgba(255, 0, 0, 1), 0 0 50px rgba(255, 0, 0, 0.7), 0 0 80px rgba(255, 0, 0, 0.3), 0 0 6px #fff;
+}
+
+.slash-line.from-right { animation-name: slash-cut-right; }
+
+@keyframes slash-cut {
+    0% { clip-path: inset(0 100% 0 0); opacity: 1; }
+    25% { clip-path: inset(0 0 0 0); opacity: 1; }
+    50% { clip-path: inset(0 0 0 0); opacity: 0.7; }
+    100% { clip-path: inset(0 0 0 0); opacity: 0; }
+}
+
+@keyframes slash-cut-right {
+    0% { clip-path: inset(0 0 0 100%); opacity: 1; }
+    25% { clip-path: inset(0 0 0 0); opacity: 1; }
+    50% { clip-path: inset(0 0 0 0); opacity: 0.7; }
+    100% { clip-path: inset(0 0 0 0); opacity: 0; }
+}
+
+.slash-flash {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: radial-gradient(ellipse at center, rgba(255, 0, 0, 0.12) 0%, transparent 70%);
+    animation: flash-fade 0.25s ease-out forwards;
+    pointer-events: none; z-index: 14;
+}
+
+@keyframes flash-fade { 0% { opacity: 1; } 100% { opacity: 0; } }
+
+.fire-ember {
+    position: fixed; border-radius: 50%; pointer-events: none; z-index: 17;
+}
+
+.screen-crack {
+    position: fixed; height: 2px; pointer-events: none; z-index: 16;
+    background: linear-gradient(90deg, transparent, rgba(40, 0, 0, 0.9) 15%, rgba(80, 0, 0, 0.8) 50%, rgba(40, 0, 0, 0.9) 85%, transparent);
+    box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.15), 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 8px rgba(255, 0, 0, 0.3);
+}
+
+/* --- OPTIMIZED JAPANESE TITLE STYLES --- */
+
+#ui {
+    top: 5% !important;
+}
+
+#main-title {
+    font-size: 4rem; /* Size thoda kam kiya taaki rendering fast ho */
+    font-weight: 900;
+    color: #fff;
+    
+    /* LIGHTWEIGHT GLOW: Sirf 2 layers (Heavy Blur hataya) */
+    text-shadow: 
+        0 0 5px #fff,
+        0 0 20px #00ffff;
+        
+    margin-bottom: 1vh;
+    letter-spacing: 5px;
+    
+    /* SLOW PULSE ANIMATION (Lag Free) */
+    animation: cursed-pulse 3s infinite ease-in-out;
+    will-change: opacity, text-shadow; /* GPU ko pehle bata diya */
+}
+
+/* Naya Animation: Hilne ki jagah Glow karega (Smooth) */
+@keyframes cursed-pulse {
+    0%, 100% { 
+        opacity: 1; 
+        text-shadow: 0 0 5px #fff, 0 0 20px #00ffff; 
+    }
+    50% { 
+        opacity: 0.8; 
+        text-shadow: 0 0 10px #fff, 0 0 30px #0000ff; 
+    }
+}
+
+#technique-name {
+    font-size: 2rem !important;
+    margin-top: 2vh !important;
+}
