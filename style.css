@@ -1,3 +1,6 @@
+/* =============================================
+   BASE
+   ============================================= */
 body {
     margin: 0;
     overflow: hidden;
@@ -8,14 +11,30 @@ body {
 }
 
 @keyframes gradient-animation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
+/* =============================================
+   GRAIN OVERLAY
+   ============================================= */
+#grain {
+    position: fixed;
+    top: 0; left: 0; 
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 5;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+}
+
+/* =============================================
+   MAIN UI — title + technique name
+   (Merged duplicate #ui rules into one block)
+   ============================================= */
 #ui {
     position: absolute;
-    top: 10%;
+    top: 5%;
     width: 100%;
     text-align: center;
     color: #fff;
@@ -23,24 +42,50 @@ body {
     z-index: 10;
 }
 
-#technique-name {
-    font-size: 2.5rem;
+#main-title {
+    font-size: 4rem;
+    font-weight: 900;
     color: #fff;
-    margin-top: 5vh;
+    text-shadow: 0 0 5px #fff, 0 0 20px #00ffff;
+    margin-bottom: 1vh;
+    letter-spacing: 5px;
+    animation: cursed-pulse 3s infinite ease-in-out;
+    will-change: opacity, text-shadow;
+}
+
+@keyframes cursed-pulse {
+    0%, 100% {
+        opacity: 1;
+        text-shadow: 0 0 5px #fff, 0 0 20px #00ffff;
+    }
+    50% {
+        opacity: 0.8;
+        text-shadow: 0 0 10px #fff, 0 0 30px #0000ff;
+    }
+}
+
+#technique-name {
+    font-size: 2rem;
+    color: #fff;
+    margin-top: 2vh;
     font-weight: 900;
     letter-spacing: 8px;
     text-transform: uppercase;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5);
     animation: text-flicker 3s infinite alternate;
+    transition: color 0.5s ease, text-shadow 0.5s ease;
 }
 
 @keyframes text-flicker {
-    0% { opacity: 1; text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5); }
-    5% { opacity: 0.8; text-shadow: 2px 0 rgba(255, 0, 0, 0.5), -2px 0 rgba(0, 255, 255, 0.5); }
-    10% { opacity: 1; text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5); }
-    100% { opacity: 1; text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 40px rgba(255, 255, 255, 0.8); }
+    0%   { opacity: 1; text-shadow: 0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.5); }
+    5%   { opacity: 0.8; text-shadow: 2px 0 rgba(255,0,0,0.5), -2px 0 rgba(0,255,255,0.5); }
+    10%  { opacity: 1; text-shadow: 0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.5); }
+    100% { opacity: 1; text-shadow: 0 0 20px rgba(255,255,255,1), 0 0 40px rgba(255,255,255,0.8); }
 }
 
+/* =============================================
+   VIDEO CONTAINER
+   ============================================= */
 #video-container {
     position: absolute;
     bottom: 2%;
@@ -57,144 +102,527 @@ body {
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
 }
 
-video { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
-#output_canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-
-#grain {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none; z-index: 5;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
 }
 
-#credits {
-    position: absolute; top: 20px; left: 20px; z-index: 100;
-    text-align: left; pointer-events: auto;
+#output_canvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
 }
 
-.credit-name {
-    color: #fff; font-size: 1.1rem; font-weight: 900;
-    text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
-    margin-bottom: 5px; letter-spacing: 2px;
-}
-
-.credit-links { display: flex; flex-direction: column; gap: 2px; }
-
+/* =============================================
+   OVERLAYS
+   ============================================= */
 #overlay {
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background-color: #000; z-index: 1000;
-    display: flex; justify-content: center; align-items: center;
-    color: #fff; flex-direction: column; cursor: pointer;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: #000;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    flex-direction: column;
+    cursor: pointer;
     transition: opacity 1s ease;
 }
 
 #overlay h1 {
-    font-size: 2rem; text-shadow: 0 0 20px red;
-    animation: pulse 1.5s infinite; background: none;
+    font-size: 2rem;
+    text-shadow: 0 0 20px red;
+    animation: pulse 1.5s infinite;
+    background: none;
     -webkit-text-fill-color: white;
+    text-align: center;
+    padding: 0 20px;
 }
 
 @keyframes pulse {
-    0% { opacity: 0.5; transform: scale(0.95); }
-    50% { opacity: 1; transform: scale(1.05); }
+    0%   { opacity: 0.5; transform: scale(0.95); }
+    50%  { opacity: 1;   transform: scale(1.05); }
     100% { opacity: 0.5; transform: scale(0.95); }
 }
 
-.credit-links a {
-    color: rgba(255, 255, 255, 0.7); font-size: 0.85rem;
-    text-decoration: none; transition: all 0.3s ease; letter-spacing: 1px;
+/* Webcam error overlay */
+#webcam-error {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: rgba(0, 0, 0, 0.92);
+    z-index: 999;
+    display: none;
+    justify-content: center;
+    align-items: center;
 }
-.credit-links a:hover { color: #00ffff; text-shadow: 0 0 8px #00ffff; }
 
-/* Dismantle Slash Effect */
+.error-box {
+    border: 1px solid rgba(255, 80, 80, 0.5);
+    border-radius: 12px;
+    padding: 2rem 3rem;
+    text-align: center;
+    color: #fff;
+    max-width: 420px;
+    box-shadow: 0 0 40px rgba(255, 0, 0, 0.2);
+    background: rgba(20, 0, 0, 0.6);
+}
+
+.error-box h2 {
+    color: #ff4444;
+    font-size: 1.4rem;
+    letter-spacing: 4px;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+}
+
+.error-box p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Void flash overlay — white blind on Infinite Void activation */
+#void-flash {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: #ffffff;
+    z-index: 500;
+    pointer-events: none;
+    opacity: 0;
+}
+
+#void-flash.active {
+    animation: void-blind 1.2s ease-out forwards;
+}
+
+@keyframes void-blind {
+    0%   { opacity: 1; }
+    30%  { opacity: 0.9; }
+    100% { opacity: 0; }
+}
+
+/* =============================================
+   TECHNIQUE HISTORY STRIP
+   ============================================= */
+#history-strip {
+    position: fixed;
+    bottom: 12px;
+    right: 20px;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    pointer-events: none;
+}
+
+#history-label {
+    font-size: 0.55rem;
+    letter-spacing: 3px;
+    color: rgba(255, 255, 255, 0.25);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+}
+
+#history-items {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-end;
+}
+
+.history-badge {
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid currentColor;
+    opacity: 1;
+    transition: opacity 0.4s ease;
+    white-space: nowrap;
+}
+
+.history-badge.fading {
+    opacity: 0.35;
+}
+
+.badge-red      { color: #ff4444; border-color: rgba(255,68,68,0.4); }
+.badge-void     { color: #00ffff; border-color: rgba(0,255,255,0.4); }
+.badge-purple   { color: #cc44ff; border-color: rgba(204,68,255,0.4); }
+.badge-shrine   { color: #ff3333; border-color: rgba(255,51,51,0.4); }
+.badge-dismantle{ color: #ff6666; border-color: rgba(255,102,102,0.4); }
+.badge-neutral  { color: rgba(255,255,255,0.3); border-color: rgba(255,255,255,0.1); }
+
+/* =============================================
+   BOTTOM-RIGHT CONTROLS: VOLUME + SCREENSHOT
+   ============================================= */
+#controls {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+#volume-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 5px 12px;
+    backdrop-filter: blur(6px);
+}
+
+#volume-control label {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.75rem;
+    cursor: default;
+    user-select: none;
+}
+
+#volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 80px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 6px rgba(0, 255, 255, 0.6);
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+}
+
+#volume-slider:hover::-webkit-slider-thumb {
+    box-shadow: 0 0 10px rgba(0, 255, 255, 1);
+}
+
+#volume-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#screenshot-btn {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(6px);
+}
+
+#screenshot-btn:hover {
+    border-color: rgba(0, 255, 255, 0.5);
+    color: #00ffff;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+#screenshot-btn.flash {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* =============================================
+   GESTURE GUIDE (collapsible, top-right)
+   ============================================= */
+#gesture-guide {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    font-family: 'Courier New', monospace;
+}
+
+#guide-toggle {
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    transition: all 0.2s ease;
+    width: 100%;
+    text-align: left;
+}
+
+#guide-toggle:hover {
+    border-color: rgba(0, 255, 255, 0.5);
+    color: #00ffff;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+}
+
+#guide-table {
+    display: none;
+    margin-top: 6px;
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    padding: 12px;
+    backdrop-filter: blur(8px);
+    min-width: 280px;
+}
+
+#guide-table.open {
+    display: block;
+}
+
+.guide-section-label {
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    color: rgba(255, 255, 255, 0.3);
+    margin-bottom: 6px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#guide-table table {
+    border-collapse: collapse;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.75);
+    width: 100%;
+}
+
+#guide-table th {
+    color: rgba(255, 255, 255, 0.35);
+    font-weight: normal;
+    letter-spacing: 2px;
+    font-size: 0.6rem;
+    padding: 3px 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: left;
+}
+
+#guide-table td {
+    padding: 5px 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    white-space: nowrap;
+}
+
+#guide-table tr:last-child td { border-bottom: none; }
+
+/* Technique color labels */
+.tech-label      { font-weight: bold; letter-spacing: 1px; font-size: 0.7rem; }
+.red-label       { color: #ff4444; text-shadow: 0 0 6px #ff0000; }
+.void-label      { color: #00ffff; text-shadow: 0 0 6px #00ffff; }
+.purple-label    { color: #cc44ff; text-shadow: 0 0 6px #aa00ff; }
+.dismantle-label { color: #ff6666; text-shadow: 0 0 6px #ff2222; }
+.shrine-label    { color: #ff3333; text-shadow: 0 0 6px #ff0000; }
+
+.combo-glow {
+    animation: combo-pulse 1.2s infinite alternate;
+}
+
+@keyframes combo-pulse {
+    from { text-shadow: 0 0 6px #aa00ff; }
+    to   { text-shadow: 0 0 14px #cc44ff, 0 0 25px #aa00ff; }
+}
+
+/* =============================================
+   SLASH & EMBER EFFECTS
+   ============================================= */
 #slash-container {
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    pointer-events: none; z-index: 15; overflow: hidden;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 15;
+    overflow: hidden;
 }
 
 .slash-line {
-    position: absolute; height: 3px;
-    background: linear-gradient(90deg, transparent 0%, rgba(255, 30, 30, 0.5) 5%, rgba(255, 100, 100, 0.8) 20%, rgba(255, 200, 200, 0.95) 40%, #fff 50%, rgba(255, 200, 200, 0.95) 60%, rgba(255, 100, 100, 0.8) 80%, rgba(255, 30, 30, 0.5) 95%, transparent 100%);
-    box-shadow: 0 0 12px rgba(255, 0, 0, 1), 0 0 35px rgba(255, 0, 0, 0.7), 0 0 60px rgba(255, 0, 0, 0.3), 0 0 4px #fff;
+    position: absolute;
+    height: 3px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 30, 30, 0.5) 5%,
+        rgba(255, 100, 100, 0.8) 20%,
+        rgba(255, 200, 200, 0.95) 40%,
+        #fff 50%,
+        rgba(255, 200, 200, 0.95) 60%,
+        rgba(255, 100, 100, 0.8) 80%,
+        rgba(255, 30, 30, 0.5) 95%,
+        transparent 100%);
+    box-shadow:
+        0 0 12px rgba(255, 0, 0, 1),
+        0 0 35px rgba(255, 0, 0, 0.7),
+        0 0 60px rgba(255, 0, 0, 0.3),
+        0 0 4px #fff;
     animation: slash-cut 0.5s ease-out forwards;
 }
 
 .slash-line.thick {
     height: 5px;
-    box-shadow: 0 0 18px rgba(255, 0, 0, 1), 0 0 50px rgba(255, 0, 0, 0.7), 0 0 80px rgba(255, 0, 0, 0.3), 0 0 6px #fff;
+    box-shadow:
+        0 0 18px rgba(255, 0, 0, 1),
+        0 0 50px rgba(255, 0, 0, 0.7),
+        0 0 80px rgba(255, 0, 0, 0.3),
+        0 0 6px #fff;
 }
 
 .slash-line.from-right { animation-name: slash-cut-right; }
 
 @keyframes slash-cut {
-    0% { clip-path: inset(0 100% 0 0); opacity: 1; }
-    25% { clip-path: inset(0 0 0 0); opacity: 1; }
-    50% { clip-path: inset(0 0 0 0); opacity: 0.7; }
-    100% { clip-path: inset(0 0 0 0); opacity: 0; }
+    0%   { clip-path: inset(0 100% 0 0); opacity: 1; }
+    25%  { clip-path: inset(0 0 0 0);    opacity: 1; }
+    50%  { clip-path: inset(0 0 0 0);    opacity: 0.7; }
+    100% { clip-path: inset(0 0 0 0);    opacity: 0; }
 }
 
 @keyframes slash-cut-right {
-    0% { clip-path: inset(0 0 0 100%); opacity: 1; }
-    25% { clip-path: inset(0 0 0 0); opacity: 1; }
-    50% { clip-path: inset(0 0 0 0); opacity: 0.7; }
-    100% { clip-path: inset(0 0 0 0); opacity: 0; }
+    0%   { clip-path: inset(0 0 0 100%); opacity: 1; }
+    25%  { clip-path: inset(0 0 0 0);    opacity: 1; }
+    50%  { clip-path: inset(0 0 0 0);    opacity: 0.7; }
+    100% { clip-path: inset(0 0 0 0);    opacity: 0; }
 }
 
 .slash-flash {
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
     background: radial-gradient(ellipse at center, rgba(255, 0, 0, 0.12) 0%, transparent 70%);
     animation: flash-fade 0.25s ease-out forwards;
-    pointer-events: none; z-index: 14;
+    pointer-events: none;
+    z-index: 14;
 }
 
-@keyframes flash-fade { 0% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes flash-fade {
+    0%   { opacity: 1; }
+    100% { opacity: 0; }
+}
 
 .fire-ember {
-    position: fixed; border-radius: 50%; pointer-events: none; z-index: 17;
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 17;
 }
 
 .screen-crack {
-    position: fixed; height: 2px; pointer-events: none; z-index: 16;
-    background: linear-gradient(90deg, transparent, rgba(40, 0, 0, 0.9) 15%, rgba(80, 0, 0, 0.8) 50%, rgba(40, 0, 0, 0.9) 85%, transparent);
-    box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.15), 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 8px rgba(255, 0, 0, 0.3);
+    position: fixed;
+    height: 2px;
+    pointer-events: none;
+    z-index: 16;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(40, 0, 0, 0.9) 15%,
+        rgba(80, 0, 0, 0.8) 50%,
+        rgba(40, 0, 0, 0.9) 85%,
+        transparent);
+    box-shadow:
+        0 -1px 0 rgba(255, 255, 255, 0.15),
+        0  1px 0 rgba(255, 255, 255, 0.10),
+        0  0   8px rgba(255, 0, 0, 0.3);
 }
 
-/* --- OPTIMIZED JAPANESE TITLE STYLES --- */
-
-#ui {
-    top: 5% !important;
-}
-
-#main-title {
-    font-size: 4rem; /* Size thoda kam kiya taaki rendering fast ho */
-    font-weight: 900;
-    color: #fff;
-    
-    /* LIGHTWEIGHT GLOW: Sirf 2 layers (Heavy Blur hataya) */
-    text-shadow: 
-        0 0 5px #fff,
-        0 0 20px #00ffff;
-        
-    margin-bottom: 1vh;
-    letter-spacing: 5px;
-    
-    /* SLOW PULSE ANIMATION (Lag Free) */
-    animation: cursed-pulse 3s infinite ease-in-out;
-    will-change: opacity, text-shadow; /* GPU ko pehle bata diya */
-}
-
-/* Naya Animation: Hilne ki jagah Glow karega (Smooth) */
-@keyframes cursed-pulse {
-    0%, 100% { 
-        opacity: 1; 
-        text-shadow: 0 0 5px #fff, 0 0 20px #00ffff; 
+/* =============================================
+   MOBILE RESPONSIVE
+   ============================================= */
+@media (max-width: 768px) {
+    #main-title {
+        font-size: 2.4rem;
+        letter-spacing: 3px;
     }
-    50% { 
-        opacity: 0.8; 
-        text-shadow: 0 0 10px #fff, 0 0 30px #0000ff; 
+
+    #technique-name {
+        font-size: 1.1rem;
+        letter-spacing: 4px;
+    }
+
+    /* Move webcam feed to bottom-center on mobile */
+    #video-container {
+        left: 50%;
+        bottom: 80px;
+        transform: translateX(-50%) scaleX(-1);
+        max-width: 92vw;
+        height: 28vh;
+    }
+
+    /* Gesture guide on mobile: left side, smaller */
+    #gesture-guide {
+        top: auto;
+        bottom: 80px;
+        right: auto;
+        left: 10px;
+    }
+
+    #guide-table {
+        min-width: 220px;
+    }
+
+    #guide-table table,
+    #guide-table td,
+    #guide-table th {
+        font-size: 0.65rem;
+    }
+
+    /* Controls stack horizontally on mobile */
+    #controls {
+        bottom: 16px;
+        right: 10px;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    #volume-slider {
+        width: 60px;
+    }
+
+    /* History strip: hide label on mobile, smaller badges */
+    #history-label {
+        display: none;
+    }
+
+    #history-strip {
+        right: 10px;
+        bottom: 56px;
     }
 }
 
-#technique-name {
-    font-size: 2rem !important;
-    margin-top: 2vh !important;
+@media (max-width: 480px) {
+    #main-title {
+        font-size: 1.8rem;
+    }
+
+    #technique-name {
+        font-size: 0.85rem;
+        letter-spacing: 3px;
+    }
+
+    .error-box {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
 }

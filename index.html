@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JJK: Cursed Technique</title>
-    
+
+    <!-- Kanji favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>呪</text></svg>">
+
     <link rel="stylesheet" href="style.css">
 
     <script type="importmap">
@@ -20,37 +23,124 @@
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body>  
 
     <div id="grain"></div>
     <div id="slash-container"></div>
 
+    <!-- Void flash: full-screen white blind triggered on Infinite Void activation -->
+    <div id="void-flash"></div>
+
+    <!-- Initial click-to-start overlay -->
     <div id="overlay">
         <h1>CLICK TO INITIALIZE CURSED TECHNIQUE</h1>
-        <p style="margin-top: 20px; color: #666; font-family: 'Courier New';">WARNING: AUDIO & VISUAL EFFECTS</p>
+        <p style="margin-top: 20px; color: #666; font-family: 'Courier New';">WARNING: AUDIO &amp; VISUAL EFFECTS</p>
     </div>
 
+    <!-- Webcam error overlay -->
+    <div id="webcam-error">
+        <div class="error-box">
+            <h2>&#9888; WEBCAM NOT DETECTED</h2>
+            <p>A webcam is required to use hand tracking and activate Cursed Techniques.</p>
+            <p style="color:#555; font-size:0.85rem; margin-top:10px;">
+                Check your browser permissions and ensure a camera is connected, then reload the page.
+            </p>
+        </div>
+    </div>
+
+    <!-- Audio -->
     <audio id="bg-music" loop>
         <source src="jujutsu_kaisen_op4.mp3" type="audio/mpeg">
     </audio>
-
-    <audio id="sfx-void" src="void.mp3"></audio>
-    <audio id="sfx-purple" src="purple.mp3"></audio>
-    <audio id="sfx-shrine" src="shrine.mp3"></audio>
+    <audio id="sfx-void"      src="void.mp3"></audio>
+    <audio id="sfx-purple"    src="purple.mp3"></audio>
+    <audio id="sfx-shrine"    src="shrine.mp3"></audio>
     <audio id="sfx-dismantle" src="dismantle.mp3"></audio>
-    <audio id="sfx-red" src="red.mp3"></audio>
+    <audio id="sfx-red"       src="red.mp3"></audio>
 
+    <!-- Main UI -->
     <div id="ui">
-        <h1><div id="main-title">呪術廻戦</div></h1>
+        <div id="main-title">&#21477;&#34899;&#36208;&#25118;</div>
         <div id="technique-name">CURSED ENERGY</div>
     </div>
 
+    <!-- Technique history strip (bottom-center) -->
+    <div id="history-strip">
+        <span id="history-label">HISTORY</span>
+        <div id="history-items"></div>
+    </div>
+
+    <!-- Webcam feed -->
     <div id="video-container">
         <video class="input_video"></video>
         <canvas id="output_canvas"></canvas>
     </div>
 
-    <script type="module" src="script.js"></script>
+    <!-- Bottom-right controls: volume slider + screenshot -->
+    <div id="controls">
+        <div id="volume-control">
+            <label for="volume-slider">&#9835;</label>
+            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
+        </div>r  
+        <button id="screenshot-btn" title="Save screenshot">&#128247;</button>
+    </div>
 
+    <!-- Gesture guide (collapsible, top-right) -->
+    <div id="gesture-guide">
+        <button id="guide-toggle">
+            <span id="guide-icon">&#9776;</span> GESTURES
+        </button>
+        <div id="guide-table">
+            <div class="guide-section-label">SINGLE HAND</div>
+            <table>
+                <thead>
+                    <tr><th>Gesture</th><th>Technique</th><th>Sorcerer</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>&#9757; Index UP</td>
+                        <td class="tech-label red-label">Red</td>
+                        <td>Gojo</td>
+                    </tr>
+                    <tr>
+                        <td>&#9996; Index + Middle UP</td>
+                        <td class="tech-label void-label">Infinite Void</td>
+                        <td>Gojo</td>
+                    </tr>
+                    <tr>
+                        <td>&#128076; Index + Thumb Pinch</td>
+                        <td class="tech-label purple-label">Hollow Purple</td>
+                        <td>Gojo</td>
+                    </tr>
+                    <tr>
+                        <td>&#129304; Index + Pinky UP</td>
+                        <td class="tech-label dismantle-label">Dismantle</td>
+                        <td>Sukuna</td>
+                    </tr>
+                    <tr>
+                        <td>&#128400; All Fingers Open</td>
+                        <td class="tech-label shrine-label">Mal. Shrine</td>
+                        <td>Sukuna</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="guide-section-label" style="margin-top:10px;">TWO-HAND COMBO</div>
+            <table>
+                <thead>
+                    <tr><th>Left Hand</th><th>Right Hand</th><th>Result</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="tech-label red-label">Red &#9757;</td>
+                        <td class="tech-label void-label">Void &#9996;</td>
+                        <td class="tech-label purple-label combo-glow">&#10022; HOLLOW PURPLE</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
 </body>
 </html>
